@@ -1,0 +1,50 @@
+a{
+	text-decoration: none;
+	font-family: fontAccentNormal;
+}
+
+ol{
+	display: flex;
+	list-style-type: none;
+	margin:10px;
+	padding:0;
+}
+
+li{
+	padding: 5px 12px;
+}
+
+form{
+	margin-top: 5px;
+}
+
+.navBar{
+	position: fixed;
+  	width: 100%;
+	display:flex;
+	justify-content: space-between;
+	z-index: 3;
+}
+
+.navIcon{
+	width: 2rem;
+	height: 2rem;
+}
+
+.flex{
+	display: flex;
+	height: 2rem;
+}
+
+#homeLogo{
+	width: 4rem;
+	height: 4rem;
+	margin-left: 4rem;
+}
+
+
+
+
+
+
+
