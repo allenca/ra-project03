@@ -12,11 +12,15 @@ export class JournalService {
     private baseAPIKey = `94a08da1fecbb6e8b46990538c7b50b2`;
     private baseJournalUrl = `http://portal.helloitscody.com/inhabitent/api/get/${this.baseAPIKey}/?`;
     private baseJournalParams = `params=[{"name":"posts_per_page","value":"5"},{"name":"paged","value":"1"}]`;
+    private postJournalUrl = `http://portal.helloitscody.com/inhabitent/api/post/${this.baseAPIKey}/?`;
     // private fixedURL = "http://portal.helloitscody.com/inhabitent/api/get/94a08da1fecbb6e8b46990538c7b50b2/?params=%5B%7B%22name%22:%22posts_per_page%22,%22value%22:%225%22%7D,%7B%22name%22:%22paged%22,%22value%22:%221%22%7D%5D"
     // fixedURL was used when baseJournalURL was suspected to be producing errors
     
     // encodeURI makes the result more legible
     private journalUrl = this.baseJournalUrl + encodeURI(this.baseJournalParams);
+
+    //metadata found at top of files
+    private headers = new Headers({'Content-Type': 'application/json', 'Access-Control-Allow-Origin':'*'});
     
     // set journal array variable as a journal array that's vectored, so no chance anything other
     // than being set as array
@@ -63,4 +67,50 @@ export class JournalService {
             return this.JournalArray;
 		})
 	}
+
+
+  addJournal(parameters:string):Promise<JournalEntry>{
+    console.log("***** adding journal *****");
+    let postURL = `${this.postJournalUrl}params=${parameters}`;
+    console.log(postURL);
+    let postSubmission = this.http.post(postURL,parameters,{headers:this.headers});
+    let postSubmissionAsPromise = postSubmission.toPromise();
+    let submissionResponse = (result) => result.json().data;
+    let whatToDoWhenPromiseIsReturned = postSubmissionAsPromise.then(submissionResponse);
+    let theWholePromise = whatToDoWhenPromiseIsReturned;
+    return theWholePromise;
+  }
+
+  getSingleJournal(ID:number):Promise<JournalEntry>{
+    let getRequest = this.http.get(this.journalUrl);
+    console.log(getRequest);
+    let requestAsPromise = getRequest.toPromise();
+    let extractSingleJournal = (response:any):any => {
+      let responseAsJson:any = response.json();
+      console.log(responseAsJson); // should be array
+      /* // one technique can employ the array 'filter' function
+      let foundJournal:Journal = responseAsJson.filter(
+        function(currentObject){
+          return currentObject.ID === ID;
+        }
+      )
+      */
+      // this technique works too, but not as efficient
+      for (let çurrentObject in responseAsJson){
+          let potentialEntry = responseAsJson[çurrentObject];
+        if ( (potentialEntry as Object).hasOwnProperty("ID") &&
+            ((potentialEntry as JournalEntry).ID === ID) ) {
+            return potentialEntry as JournalEntry;
+          // end if
+        }
+          // end for loop
+      }
+      // end extractSingleJournalFunction
+    };
+    let taskToDoWhenPromiseIsReturned = extractSingleJournal;
+    let theWholePromise = requestAsPromise.then(taskToDoWhenPromiseIsReturned);
+
+    return theWholePromise;
+
+  }
 }
