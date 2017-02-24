@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { JournalService } from './journal.service';
 import { JournalEntry } from './journal.entry';
 
+declare var $:any;
+
 @Component({
   selector: 'app-journal',
   templateUrl: './journal.component.html',
