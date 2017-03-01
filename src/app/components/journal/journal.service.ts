@@ -12,6 +12,8 @@ export class JournalService {
     private baseAPIKey = `94a08da1fecbb6e8b46990538c7b50b2`;
     private baseJournalUrl = `http://portal.helloitscody.com/inhabitent/api/get/${this.baseAPIKey}/?`;
     private baseJournalParams = `params=[{"name":"posts_per_page","value":"5"},{"name":"paged","value":"1"}]`;
+    
+    // code to post journal entries
     private postJournalUrl = `http://portal.helloitscody.com/inhabitent/api/post/${this.baseAPIKey}/?`;
     // private fixedURL = "http://portal.helloitscody.com/inhabitent/api/get/94a08da1fecbb6e8b46990538c7b50b2/?params=%5B%7B%22name%22:%22posts_per_page%22,%22value%22:%225%22%7D,%7B%22name%22:%22paged%22,%22value%22:%221%22%7D%5D"
     // fixedURL was used when baseJournalURL was suspected to be producing errors
