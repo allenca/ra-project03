@@ -1,7 +1,10 @@
-<h1>INHABITENT JOURNAL</h1>
-<div class="owl-carousel owl-theme">
-<div class="post" *ngFor = "let journal of Journals">
-      
+<h1>INHABITENT JOURNALXX</h1>
+<!-- <div class="owl-carousel owl-theme"> -->
+<p>hi there{{this.Journals}}</p>
+
+
+<div class="post" *ngFor = "let journal of this.Journals">
+      <h1>asdhasdjkas</h1>
        <img src={{journal.image}}>
        <div>
            <h3>{{journal.date}} / {{journal.categories.count}} comments</h3>
@@ -10,6 +13,5 @@
        </div>
       
 </div>    
-</div>
 
 
